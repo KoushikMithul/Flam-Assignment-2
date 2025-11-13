@@ -1,0 +1,7 @@
+# ninja log v5
+0	2326	1763052626878525744	CMakeFiles/gl-renderer.dir/gl/gl_renderer.cpp.o	c94f2dec6b1e888c
+1	2356	1763052626900064553	CMakeFiles/gl-renderer.dir/gl/shader_utils.cpp.o	c24c7a75a8b2228f
+0	3186	1763052627745809459	CMakeFiles/native-lib.dir/jni/image_processor.cpp.o	2f912f17b6c7fb99
+0	3187	1763052627732581701	CMakeFiles/native-lib.dir/jni/native-lib.cpp.o	e7bc89052525e629
+2356	3377	1763052627938982327	/Users/koushikmithul/Documents/Docs/Projects/Flam-2/app/build/intermediates/cxx/Debug/6l4u66w2/obj/arm64-v8a/libgl-renderer.so	441ca4fba3cfab67
+3187	3705	1763052628222483559	/Users/koushikmithul/Documents/Docs/Projects/Flam-2/app/build/intermediates/cxx/Debug/6l4u66w2/obj/arm64-v8a/libnative-lib.so	a94c0969361cf764

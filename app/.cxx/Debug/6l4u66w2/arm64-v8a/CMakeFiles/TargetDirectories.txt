@@ -1,0 +1,4 @@
+/Users/koushikmithul/Documents/Docs/Projects/Flam-2/app/.cxx/Debug/6l4u66w2/arm64-v8a/CMakeFiles/native-lib.dir
+/Users/koushikmithul/Documents/Docs/Projects/Flam-2/app/.cxx/Debug/6l4u66w2/arm64-v8a/CMakeFiles/gl-renderer.dir
+/Users/koushikmithul/Documents/Docs/Projects/Flam-2/app/.cxx/Debug/6l4u66w2/arm64-v8a/CMakeFiles/edit_cache.dir
+/Users/koushikmithul/Documents/Docs/Projects/Flam-2/app/.cxx/Debug/6l4u66w2/arm64-v8a/CMakeFiles/rebuild_cache.dir

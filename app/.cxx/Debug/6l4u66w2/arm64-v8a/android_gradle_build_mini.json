@@ -1,0 +1,38 @@
+{
+  "buildFiles": [
+    "/Users/koushikmithul/Documents/Docs/Projects/Flam-2/app/src/main/cpp/CMakeLists.txt",
+    "/Users/koushikmithul/Documents/Docs/Projects/Flam-2/app/src/main/cpp/opencv-sdk/native/jni/OpenCVConfig-version.cmake",
+    "/Users/koushikmithul/Documents/Docs/Projects/Flam-2/app/src/main/cpp/opencv-sdk/native/jni/OpenCVConfig.cmake",
+    "/Users/koushikmithul/Documents/Docs/Projects/Flam-2/app/src/main/cpp/opencv-sdk/native/jni/abi-arm64-v8a/OpenCVConfig.cmake",
+    "/Users/koushikmithul/Documents/Docs/Projects/Flam-2/app/src/main/cpp/opencv-sdk/native/jni/abi-arm64-v8a/OpenCVModules-release.cmake",
+    "/Users/koushikmithul/Documents/Docs/Projects/Flam-2/app/src/main/cpp/opencv-sdk/native/jni/abi-arm64-v8a/OpenCVModules.cmake"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/koushikmithul/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/Users/koushikmithul/Documents/Docs/Projects/Flam-2/app/.cxx/Debug/6l4u66w2/arm64-v8a",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/koushikmithul/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/Users/koushikmithul/Documents/Docs/Projects/Flam-2/app/.cxx/Debug/6l4u66w2/arm64-v8a",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "native-lib::@6890427a1f51a3e7e1df": {
+      "artifactName": "native-lib",
+      "abi": "arm64-v8a",
+      "output": "/Users/koushikmithul/Documents/Docs/Projects/Flam-2/app/build/intermediates/cxx/Debug/6l4u66w2/obj/arm64-v8a/libnative-lib.so",
+      "runtimeFiles": []
+    },
+    "gl-renderer::@6890427a1f51a3e7e1df": {
+      "artifactName": "gl-renderer",
+      "abi": "arm64-v8a",
+      "output": "/Users/koushikmithul/Documents/Docs/Projects/Flam-2/app/build/intermediates/cxx/Debug/6l4u66w2/obj/arm64-v8a/libgl-renderer.so",
+      "runtimeFiles": []
+    }
+  }
+}

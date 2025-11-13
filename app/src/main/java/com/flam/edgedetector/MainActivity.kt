@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var cameraProcessor: CameraProcessor
+    private lateinit var frameServer: FrameServer
     
     companion object {
         private const val TAG = "MainActivity"
@@ -64,15 +65,23 @@ class MainActivity : AppCompatActivity() {
             tvVersion.text = "Error loading native library"
         }
         
+        // Initialize HTTP server for web viewer
+        frameServer = FrameServer(8080)
+        frameServer.startServer()
+        Toast.makeText(this, "HTTP Server started on port 8080", Toast.LENGTH_LONG).show()
+        
         // Setup camera processor
         cameraExecutor = Executors.newSingleThreadExecutor()
-        cameraProcessor = CameraProcessor { bitmap, fps ->
-            runOnUiThread {
-                glRenderer.updateBitmap(bitmap)
-                glSurfaceView.requestRender()
-                tvFps.text = "FPS: ${"%.1f".format(fps)}"
-            }
-        }
+        cameraProcessor = CameraProcessor(
+            onFrameProcessed = { bitmap, fps ->
+                runOnUiThread {
+                    glRenderer.updateBitmap(bitmap)
+                    glSurfaceView.requestRender()
+                    tvFps.text = "FPS: ${"%.1f".format(fps)}"
+                }
+            },
+            frameServer = frameServer
+        )
         
         // Toggle button
         updateModeDisplay()
@@ -175,6 +184,8 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         cameraExecutor.shutdown()
+        frameServer.stopServer()
+        Log.i(TAG, "HTTP server stopped")
     }
     
     override fun onPause() {

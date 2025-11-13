@@ -1,0 +1,6 @@
+/Users/koushikmithul/Documents/Docs/Projects/Flam-2/app/src/main/cpp/CMakeLists.txt
+/Users/koushikmithul/Documents/Docs/Projects/Flam-2/app/src/main/cpp/opencv-sdk/native/jni/OpenCVConfig-version.cmake
+/Users/koushikmithul/Documents/Docs/Projects/Flam-2/app/src/main/cpp/opencv-sdk/native/jni/OpenCVConfig.cmake
+/Users/koushikmithul/Documents/Docs/Projects/Flam-2/app/src/main/cpp/opencv-sdk/native/jni/abi-arm64-v8a/OpenCVConfig.cmake
+/Users/koushikmithul/Documents/Docs/Projects/Flam-2/app/src/main/cpp/opencv-sdk/native/jni/abi-arm64-v8a/OpenCVModules-release.cmake
+/Users/koushikmithul/Documents/Docs/Projects/Flam-2/app/src/main/cpp/opencv-sdk/native/jni/abi-arm64-v8a/OpenCVModules.cmake

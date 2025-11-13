@@ -12,7 +12,8 @@ import java.io.ByteArrayOutputStream
 import java.util.concurrent.atomic.AtomicLong
 
 class CameraProcessor(
-    private val onFrameProcessed: (Bitmap, Float) -> Unit
+    private val onFrameProcessed: (Bitmap, Float) -> Unit,
+    private val frameServer: FrameServer? = null
 ) : ImageAnalysis.Analyzer {
     
     enum class ProcessingMode {
@@ -59,6 +60,13 @@ class CameraProcessor(
             
             // Callback with processed frame and FPS
             onFrameProcessed(processedBitmap, currentFps)
+            
+            // Send frame to HTTP server for web viewer
+            frameServer?.updateFrame(
+                processedBitmap,
+                processingMode.name,
+                currentFps.toDouble()
+            )
             
             val processTime = System.currentTimeMillis() - startTime
             lastProcessTime.set(processTime)

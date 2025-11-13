@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edge Detector Web Viewer</title>
+    <title>Flam Edge Detector - Web Viewer</title>
     <style>
         * {
             margin: 0;
@@ -15,33 +15,86 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             padding: 20px;
         }
         
         .container {
+            max-width: 1000px;
+            margin: 0 auto;
             background: white;
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-width: 900px;
-            width: 100%;
             padding: 40px;
         }
         
-        h1 {
+        header {
             text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
             color: #333;
             margin-bottom: 10px;
             font-size: 2.5em;
         }
         
         .subtitle {
-            text-align: center;
             color: #666;
-            margin-bottom: 30px;
             font-size: 1.1em;
+        }
+        
+        .status {
+            text-align: center;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+        
+        .status.info {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+        
+        .status.success {
+            background: #e8f5e9;
+            color: #388e3c;
+        }
+        
+        .status.error {
+            background: #ffebee;
+            color: #d32f2f;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        button:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        button:active {
+            transform: translateY(0);
         }
         
         .viewer-section {
@@ -51,28 +104,37 @@
             margin-bottom: 30px;
         }
         
-        #imageCanvas {
+        #canvas {
             width: 100%;
-            max-width: 640px;
-            height: auto;
+            max-width: 800px;
+            height: 600px;
             border: 3px solid #667eea;
             border-radius: 10px;
             display: block;
             margin: 0 auto;
-            background: #000;
+            background: #1a1a1a;
+        }
+        
+        .stats-section {
+            margin-top: 30px;
+        }
+        
+        .stats-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
         }
         
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 20px;
-            margin-top: 30px;
         }
         
         .stat-card {
             background: white;
             border-radius: 10px;
-            padding: 20px;
+            padding: 25px;
             text-align: center;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             transition: transform 0.2s;
@@ -80,12 +142,13 @@
         
         .stat-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
         
         .stat-label {
             color: #666;
             font-size: 0.9em;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -93,111 +156,115 @@
         
         .stat-value {
             color: #667eea;
-            font-size: 1.8em;
+            font-size: 2em;
             font-weight: bold;
         }
         
-        .info-section {
-            background: #f9f9f9;
-            border-left: 4px solid #667eea;
+        .info-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
             padding: 20px;
-            border-radius: 5px;
             margin-top: 30px;
         }
         
-        .info-section h3 {
-            color: #333;
+        .info-box h3 {
+            color: #856404;
             margin-bottom: 15px;
         }
         
-        .info-section ul {
-            list-style-position: inside;
-            color: #555;
-            line-height: 1.8;
+        .info-box ol {
+            margin-left: 20px;
+            color: #856404;
         }
         
-        .tech-stack {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 20px;
+        .info-box li {
+            margin: 10px 0;
+            line-height: 1.6;
         }
         
-        .tech-badge {
-            background: #667eea;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
+        .info-box code {
+            background: #fff;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #d32f2f;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
             font-size: 0.9em;
-            font-weight: 600;
-        }
-        
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px;
-            }
-            
-            h1 {
-                font-size: 2em;
-            }
-            
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🎨 Edge Detector Web Viewer</h1>
-        <p class="subtitle">Real-time OpenCV + Android + OpenGL ES Processing</p>
+        <header>
+            <h1>🎥 Flam Edge Detector</h1>
+            <p class="subtitle">Real-time OpenCV Processing - Web Viewer</p>
+        </header>
+        
+        <div id="status" class="status info">Ready to connect</div>
+        
+        <div class="controls">
+            <button id="connectBtn">Connect</button>
+        </div>
         
         <div class="viewer-section">
-            <canvas id="imageCanvas" width="640" height="480"></canvas>
+            <canvas id="canvas" width="800" height="600"></canvas>
         </div>
         
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-label">Resolution</div>
-                <div class="stat-value" id="resolution">640x480</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-label">FPS</div>
-                <div class="stat-value" id="fps">15.0</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-label">Processing</div>
-                <div class="stat-value" id="processing">Canny</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-label">Frame Time</div>
-                <div class="stat-value" id="frameTime">33ms</div>
+        <div class="stats-section">
+            <h2>📊 Frame Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Resolution</div>
+                    <div class="stat-value" id="resolution">-</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-label">FPS</div>
+                    <div class="stat-value" id="fps">-</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-label">Processing Mode</div>
+                    <div class="stat-value" id="processing" style="font-size: 1.3em;">-</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-label">Frame Time</div>
+                    <div class="stat-value" id="frameTime">-</div>
+                </div>
             </div>
         </div>
         
-        <div class="info-section">
-            <h3>📱 Android + OpenCV + OpenGL ES Architecture</h3>
-            <ul>
-                <li><strong>Camera Feed:</strong> CameraX API captures frames from device camera</li>
-                <li><strong>Native Processing:</strong> JNI bridge sends frames to C++ OpenCV for edge detection</li>
-                <li><strong>Rendering:</strong> OpenGL ES 2.0 displays processed frames as textures</li>
-                <li><strong>Performance:</strong> Real-time processing at 10-15 FPS minimum</li>
-            </ul>
+        <div class="info-box">
+            <h3>📋 Setup Instructions</h3>
+            <ol>
+                <li><strong>Run the Android app</strong> on your emulator or device</li>
+                <li><strong>Set up port forwarding</strong> (for emulator only):
+                    <br><code>adb forward tcp:8080 tcp:8080</code>
+                </li>
+                <li><strong>Click "Connect"</strong> button above to start streaming</li>
+                <li><strong>Toggle modes</strong> on the Android app to see different processing:
+                    <ul style="margin-top: 10px; list-style-type: disc; margin-left: 20px;">
+                        <li>Raw Camera - Normal color feed</li>
+                        <li>Canny Edge - White edges on black background</li>
+                        <li>Grayscale - Black and white image</li>
+                    </ul>
+                </li>
+            </ol>
         </div>
         
-        <div class="info-section">
-            <h3>🔧 Tech Stack</h3>
-            <div class="tech-stack">
-                <span class="tech-badge">TypeScript</span>
-                <span class="tech-badge">Android Kotlin</span>
-                <span class="tech-badge">OpenCV C++</span>
-                <span class="tech-badge">OpenGL ES 2.0</span>
-                <span class="tech-badge">JNI/NDK</span>
-                <span class="tech-badge">CameraX</span>
-            </div>
-        </div>
+        <footer>
+            <p>Flam Assignment #2 - Software Engineering Intern (R&D)</p>
+            <p>Android + OpenCV + OpenGL ES + TypeScript Integration</p>
+        </footer>
     </div>
     
-    <script type="module" src="dist/viewer.js"></script>
+    <script src="dist/viewer.js"></script>
 </body>
 </html>
