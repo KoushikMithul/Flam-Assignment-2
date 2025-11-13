@@ -158,7 +158,7 @@ class FrameServer(private val port: Int = 8080) : NanoHTTPD(port) {
                         fetch('/stats')
                             .then(r => r.json())
                             .then(data => {
-                                stats.textContent = `Mode: $${data.mode} | FPS: $${data.fps.toFixed(1)} | Resolution: $${data.width}x$${data.height}`;
+                                stats.textContent = 'Mode: ' + data.mode + ' | FPS: ' + data.fps.toFixed(1) + ' | Resolution: ' + data.width + 'x' + data.height;
                             })
                             .catch(() => {});
                     }
