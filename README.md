@@ -131,83 +131,73 @@ Flam-Assignment-2/
 └── README.md                           # This file
 ```
 
-## 🔧 Setup Instructions
+## � Quick Start
 
 ### Prerequisites
 
-1. **Android Studio** (Hedgehog 2023.1.1 or later)
-2. **Android SDK** (API Level 24+)
-3. **NDK** (25.1.8937393 or later)
-4. **CMake** (3.22.1 or later)
-5. **OpenCV Android SDK** (4.x)
-6. **Node.js** (18.x or later) for web viewer
-7. **TypeScript** (5.3+)
+- **Android Studio** (Hedgehog 2023.1.1+)
+- **Android SDK** (API 24+)
+- **NDK** (25.1.8937393+)
+- **CMake** (3.22.1+)
+- **Node.js** (18.x+) for web viewer
 
-### Step 1: Download OpenCV Android SDK
+### ⚡ Setup (5 minutes)
 
+**1. Clone Repository**
 ```bash
-# Download OpenCV Android SDK
-cd ~/Downloads
-wget https://github.com/opencv/opencv/releases/download/4.8.0/opencv-4.8.0-android-sdk.zip
-unzip opencv-4.8.0-android-sdk.zip
-
-# Copy to project (adjust path as needed)
-cp -r opencv-4.8.0-android-sdk/sdk app/src/main/cpp/opencv-sdk
-```
-
-### Step 2: Open Project in Android Studio
-
-```bash
-# Clone the repository
 git clone https://github.com/KoushikMithul/Flam-Assignment-2.git
 cd Flam-Assignment-2
-
-# Open in Android Studio
-# File > Open > Select project folder
 ```
 
-### Step 3: Configure NDK and CMake
-
-1. Open **Android Studio** > **File** > **Project Structure**
-2. Navigate to **SDK Location**
-3. Ensure NDK and CMake are installed:
-   - Tools > SDK Manager > SDK Tools
-   - Check: NDK (Side by side), CMake
-
-### Step 4: Update CMakeLists.txt OpenCV Path
-
-Edit `app/src/main/cpp/CMakeLists.txt` and verify the OpenCV path:
-
-```cmake
-set(OpenCV_DIR ${CMAKE_SOURCE_DIR}/opencv-sdk/sdk/native/jni)
-```
-
-### Step 5: Build and Run Android App
-
+**2. Download OpenCV SDK** ⚠️ **CRITICAL STEP**
 ```bash
-# Build via command line (optional)
-./gradlew assembleDebug
+# Automated script (recommended)
+./setup-opencv.sh
 
-# Or click "Run" in Android Studio
-# Select your device or emulator
+# OR Manual download
+wget https://github.com/opencv/opencv/releases/download/4.8.0/opencv-4.8.0-android-sdk.zip
+unzip opencv-4.8.0-android-sdk.zip
+mv opencv-4.8.0-android-sdk/sdk app/src/main/cpp/opencv-sdk
 ```
 
-### Step 6: Setup TypeScript Web Viewer
+**Verify OpenCV installation:**
+```bash
+ls app/src/main/cpp/opencv-sdk/sdk/native/jni
+# Should show: abi-armeabi-v7a, abi-arm64-v8a, OpenCVConfig.cmake
+```
 
+**3. Open in Android Studio**
+```bash
+# File > Open > Select project folder
+# Or from command line (macOS):
+open -a "Android Studio" .
+```
+
+**4. Install NDK & CMake**
+- Tools > SDK Manager > SDK Tools
+- Check: ☑️ NDK (Side by side), ☑️ CMake
+- Click Apply
+
+**5. Build & Run**
+```bash
+# Sync Gradle (Android Studio will prompt)
+# Click Run ▶️ button
+# Grant camera permissions when prompted
+```
+
+**6. Web Viewer (Optional)**
 ```bash
 cd web
-
-# Install dependencies
-npm install
-
-# Build TypeScript
-npm run build
-
-# Serve locally
-npm run serve
-
-# Open browser to http://localhost:8080
+npm install && npm run build && npm run serve
+# Open http://localhost:8080
 ```
+
+## ⚠️ Important Notes
+
+- **OpenCV SDK is NOT included** in the repository (200MB+). You must download it separately using the script or manually.
+- **Test on physical device** for best performance (emulator is slower for OpenCV processing).
+- **First build takes 3-5 minutes** due to native compilation.
+- Check `app/src/main/cpp/CMakeLists.txt` if you encounter OpenCV linking errors.
 
 ## 🎯 Usage
 
@@ -278,47 +268,56 @@ GLRenderer → OpenGL Texture → Display
 - **Memory**: Efficient bitmap reuse
 - **CPU usage**: ~30-40% on mid-range devices
 
-## 🐛 Troubleshooting
+## 🐛 Common Issues & Solutions
 
-### OpenCV Linking Errors
+| Issue | Solution |
+|-------|----------|
+| **"OpenCV not found"** | Run `./setup-opencv.sh` or manually download OpenCV SDK |
+| **NDK build fails** | Install NDK via Android Studio SDK Manager |
+| **Camera permission denied** | Grant manually in Settings > Apps > Edge Detector |
+| **Low FPS (< 10)** | Test on physical device (emulator is slow) |
+| **App crashes on launch** | Check Logcat for errors: `adb logcat \| grep -E "opencv\|native"` |
+| **OpenCV linking error** | Verify path in `CMakeLists.txt`: `${CMAKE_SOURCE_DIR}/opencv-sdk` |
 
-```bash
-# Ensure OpenCV SDK is properly extracted
-ls app/src/main/cpp/opencv-sdk/sdk/native/jni
+## � Implementation Highlights
 
-# Should show: abi-*, OpenCVConfig.cmake
+### Architecture Decisions
+- **JNI/NDK**: Direct memory access for zero-copy operations, optimal performance
+- **OpenGL ES 2.0**: Hardware-accelerated rendering, efficient texture display
+- **CameraX**: Modern, lifecycle-aware camera API with better device compatibility
+- **TypeScript**: Type safety and modern features for maintainable web code
+
+### Performance Optimizations
+1. Direct bitmap access via `AndroidBitmap_lockPixels` for zero-copy operations
+2. All heavy processing in C++ for maximum speed
+3. Efficient YUV to RGB conversion in native code
+4. OpenGL hardware-accelerated texture rendering
+5. Frame backpressure strategy (keep only latest frame)
+
+### Code Quality
+- Modular structure with separated concerns (camera, processing, rendering)
+- Comprehensive error handling and resource cleanup
+- Extensive logging for debugging
+- Strong typing in Kotlin and TypeScript
+- Inline documentation for complex logic
+
+## 📈 Development Timeline
+
+**Git Commit History:**
 ```
-
-### NDK Build Failures
-
-```bash
-# Check NDK version
-ls $ANDROID_HOME/ndk/
-
-# Update gradle.properties if needed
-android.ndkVersion=25.1.8937393
+✅ Initial commit - Project setup
+✅ Native C++ layer - JNI bridge + OpenCV processing
+✅ TypeScript web viewer - Canvas API + stats display
+✅ Documentation - README + setup scripts
 ```
-
-### Camera Permissions Denied
-
-- Manually grant camera permission in device Settings > Apps
-- Check `AndroidManifest.xml` has camera permissions
-
-### Low FPS
-
-- Reduce camera resolution in `CameraProcessor.kt`
-- Adjust Canny thresholds for faster processing
-- Test on physical device (emulator is slower)
 
 ## 🚀 Future Enhancements
 
-- [ ] WebSocket server for real-time frame streaming to web viewer
-- [ ] Additional filters (Sobel, Laplacian, Bilateral)
-- [ ] Face detection using OpenCV cascades
-- [ ] Frame recording and export
-- [ ] Custom shader effects
-- [ ] Multi-camera support
-- [ ] ARCore integration
+- WebSocket server for real-time frame streaming
+- Additional filters (Sobel, Laplacian, Bilateral)
+- Face detection using OpenCV cascades
+- Video recording and export
+- Custom shader effects
 
 ## 📝 Evaluation Criteria Checklist
 
