@@ -35,11 +35,14 @@ A high-performance Android application demonstrating real-time computer vision p
 - Smooth 10-15+ FPS rendering
 
 ### ✅ TypeScript Web Viewer
-- Modern, responsive web interface
-- Real-time frame statistics display
-- Sample edge detection visualization
-- WebSocket placeholder for future streaming
+- Modern, responsive web interface with real-time streaming
+- **HTTP server** embedded in Android app (NanoHTTPD)
+- **Real-time frame streaming** via HTTP polling
+- Live frame statistics display (FPS, resolution, mode, timing)
+- Connect/disconnect controls with status indicators
+- Serves frames at ~10 FPS to web browser
 - Clean, modular TypeScript architecture
+- Built-in test page at http://localhost:8080/
 
 ## 🏗️ Architecture
 
@@ -185,11 +188,38 @@ open -a "Android Studio" .
 # Grant camera permissions when prompted
 ```
 
-**6. Web Viewer (Optional)**
+**6. Web Viewer - HTTP Streaming**
+
+The Android app runs an HTTP server on port 8080 for streaming frames to the web.
+
+**For Emulator:**
 ```bash
+# Set up port forwarding
+adb forward tcp:8080 tcp:8080
+
+# Serve web viewer
 cd web
-npm install && npm run build && npm run serve
-# Open http://localhost:8080
+python3 -m http.server 3000
+
+# Open http://localhost:3000
+# Click "Connect" button to start streaming
+```
+
+**For Real Device:**
+- Find device IP in Settings → About Phone
+- Open `http://<device-ip>:8080` in browser
+- Or see `WEB_VIEWER_GUIDE.md` for detailed instructions
+
+**Test the Server:**
+```bash
+# Direct access to frame endpoint
+curl http://localhost:8080/frame -o frame.jpg
+
+# Get stats
+curl http://localhost:8080/stats
+
+# Open built-in test page
+open http://localhost:8080/
 ```
 
 ## ⚠️ Important Notes
