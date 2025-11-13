@@ -34,12 +34,14 @@ find_library(log-lib log)
 find_library(android-lib android)
 find_library(gles-lib GLESv2)
 find_library(egl-lib EGL)
+find_library(jnigraphics-lib jnigraphics)
 
 target_link_libraries(
     native-lib
     ${OpenCV_LIBS}
     ${log-lib}
     ${android-lib}
+    ${jnigraphics-lib}
 )
 
 target_link_libraries(
