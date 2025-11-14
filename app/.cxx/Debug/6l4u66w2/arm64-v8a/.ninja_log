@@ -5,3 +5,17 @@
 0	3187	1763052627732581701	CMakeFiles/native-lib.dir/jni/native-lib.cpp.o	e7bc89052525e629
 2356	3377	1763052627938982327	/Users/koushikmithul/Documents/Docs/Projects/Flam-2/app/build/intermediates/cxx/Debug/6l4u66w2/obj/arm64-v8a/libgl-renderer.so	441ca4fba3cfab67
 3187	3705	1763052628222483559	/Users/koushikmithul/Documents/Docs/Projects/Flam-2/app/build/intermediates/cxx/Debug/6l4u66w2/obj/arm64-v8a/libnative-lib.so	a94c0969361cf764
+0	30	0	clean	f64a4457d300b482
+2	1389	1763054421537083135	CMakeFiles/gl-renderer.dir/gl/gl_renderer.cpp.o	c94f2dec6b1e888c
+3	1390	1763054421541579089	CMakeFiles/gl-renderer.dir/gl/shader_utils.cpp.o	c24c7a75a8b2228f
+1390	1649	1763054421799055966	/Users/koushikmithul/Documents/Docs/Projects/Flam-2/app/build/intermediates/cxx/Debug/6l4u66w2/obj/arm64-v8a/libgl-renderer.so	441ca4fba3cfab67
+5	2081	1763054422228616202	CMakeFiles/native-lib.dir/jni/image_processor.cpp.o	2f912f17b6c7fb99
+4	2082	1763054422228857658	CMakeFiles/native-lib.dir/jni/native-lib.cpp.o	e7bc89052525e629
+2082	2244	1763054422369228433	/Users/koushikmithul/Documents/Docs/Projects/Flam-2/app/build/intermediates/cxx/Debug/6l4u66w2/obj/arm64-v8a/libnative-lib.so	a94c0969361cf764
+0	11	0	clean	f64a4457d300b482
+5	929	1763054583090855405	CMakeFiles/gl-renderer.dir/gl/gl_renderer.cpp.o	c94f2dec6b1e888c
+7	930	1763054583093998122	CMakeFiles/gl-renderer.dir/gl/shader_utils.cpp.o	c24c7a75a8b2228f
+930	1176	1763054583337515228	/Users/koushikmithul/Documents/Docs/Projects/Flam-2/app/build/intermediates/cxx/Debug/6l4u66w2/obj/arm64-v8a/libgl-renderer.so	441ca4fba3cfab67
+1	1423	1763054583585184708	CMakeFiles/native-lib.dir/jni/native-lib.cpp.o	e7bc89052525e629
+2	1425	1763054583587332060	CMakeFiles/native-lib.dir/jni/image_processor.cpp.o	2f912f17b6c7fb99
+1425	1557	1763054583704281955	/Users/koushikmithul/Documents/Docs/Projects/Flam-2/app/build/intermediates/cxx/Debug/6l4u66w2/obj/arm64-v8a/libnative-lib.so	a94c0969361cf764
